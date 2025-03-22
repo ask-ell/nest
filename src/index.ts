@@ -1,3 +1,4 @@
 import { SecurityWrapper } from './security'
+import { NestLogger } from './logger'
 
-export { SecurityWrapper }
+export { SecurityWrapper, NestLogger }
