@@ -2,10 +2,14 @@ compose := docker compose
 run := $(compose) run --rm
 defaultService := node
 
-node_modules/time:
+.PHONY: install
+install:
 	$(run) -T $(defaultService) yarn
 	$(run) -T $(defaultService) yarn install:husky
 	touch node_modules/time
+
+node_modules/time:
+	@make install
 
 dist/time:
 	$(MAKE) build

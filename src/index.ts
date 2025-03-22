@@ -1,1 +1,3 @@
-console.log('Hello world !')
+import { SecurityWrapper } from './security'
+
+export { SecurityWrapper }
