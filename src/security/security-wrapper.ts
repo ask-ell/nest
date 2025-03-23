@@ -1,9 +1,10 @@
 import { INestApplication } from "@nestjs/common";
-
-import { configureCsurf } from "./csurf";
+import cookieParser from "cookie-parser";
+import csurf from "csurf";
 
 export class SecurityWrapper {
   static wrap(application: INestApplication): void {
-    configureCsurf(application);
+    application.use(cookieParser());
+    application.use(csurf({ cookie: true }));
   }
 }
