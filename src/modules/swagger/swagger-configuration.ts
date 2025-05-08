@@ -5,13 +5,14 @@ import {
   type OpenAPIObject,
   SwaggerModule,
 } from "@nestjs/swagger";
+import { ISwaggerConfigurationState } from "./swagger-configuration.state.inteface";
+import { ISwaggerConfiguration } from "./swagger-configuration.inteface";
 
-interface SwaggerConfigurationState {
-  title: string;
-}
-
-export class SwaggerConfiguration<T> extends Entity<SwaggerConfigurationState> {
-  checkStateValidity(_newState: SwaggerConfigurationState): IResult<void> {
+export class SwaggerConfiguration<T>
+  extends Entity<ISwaggerConfigurationState>
+  implements ISwaggerConfiguration<T>
+{
+  checkStateValidity(_newState: ISwaggerConfigurationState): IResult<void> {
     return ok();
   }
 
