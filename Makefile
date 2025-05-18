@@ -1,49 +1,58 @@
-compose := docker compose
-run := $(compose) run --rm
-defaultService := node
+ASK_VERSION := "0.0.3"
+
+.PHONY: reload-makefile
+# Reload Makefile from latest Ask version
+reload-makefile:
+	curl -o Makefile https://raw.githubusercontent.com/ask-ell/scripts/refs/heads/release/node.Makefile
+
+.PHONY: help
+# Show help
+help:
+	@cat $(MAKEFILE_LIST) | docker run --rm -i xanders/make-help
+
+.env:
+	cp .env.sample .env
 
 .PHONY: install
+# Install dependencies
 install:
-	$(run) -T $(defaultService) yarn
-	$(run) -T $(defaultService) yarn install:husky
-	touch node_modules/time
+	npm install
+	date > node_modules/last_install
 
-node_modules/time:
+node_modules/last_install:
 	@make install
 
-dist/time:
-	$(MAKE) build
+.PHONY: build
+# Build project
+build:
+	npm run build
+	mkdir -p build
+	date > build/last_build
 
-.PHONY: shell
-shell:
-	$(run) $(defaultService) /bin/bash
+build/last_build:
+	@make build
+
+.PHONY: serve
+# Run project in development mode
+serve: .env node_modules/last_install
+	npm run start:dev
 
 .PHONY: format
-format: node_modules/time
-	$(run) -T -v ~/.gitconfig:/home/node/.gitconfig $(defaultService) yarn format
+# Format project
+format:
+	npm run format
 
 .PHONY: lint
-lint: node_modules/time
-	$(run) -T $(defaultService) yarn lint
+# Format project
+lint:
+	npm run lint
 
 .PHONY: test
-test: node_modules/time
-	$(run) $(defaultService) yarn test
+# Run tests
+test: node_modules/last_install
+	npm run test
 
 .PHONY: test-watch
-test-watch: node_modules/time
-	$(run) $(defaultService) yarn test:watch
-
-.PHONY: build
-build: node_modules/time
-	$(run) $(defaultService) yarn build
-	$(run) $(defaultService) yarn build:doc
-	touch dist/time
-
-.PHONY: publish
-publish: dist/time
-	$(run) $(defaultService) npm login && npm publish
-
-.PHONY: clean
-clean:
-	$(compose) down --volumes
+# Run tests in watch mode
+test-watch: node_modules/last_install
+	npm run test:watch

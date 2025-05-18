@@ -3,8 +3,9 @@ name: Check Pull Request Validity
 on:
   pull_request:
     branches:
-      - main
-  
+      - release
+      - develop
+
 permissions:
   contents: write
 
@@ -21,10 +22,10 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Run tests
-        run: yarn test
+        run: npm run test
 
       - name: Make sure the build works
-        run: yarn build
+        run: npm run build
