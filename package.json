@@ -1,12 +1,11 @@
 {
   "name": "@ask-ell/nest",
   "description": "Nest.js framework utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "main": "dist/src/index.js",
   "scripts": {
-    "build": "tsc",
-    "build:doc": "typedoc --out docs ./src",
+    "build": "tsc && typedoc --out docs ./src",
     "format": "lint-staged",
     "lint": "eslint src/*.ts --fix",
     "test": "jest",
@@ -39,10 +38,10 @@
   "dependencies": {
     "@nestjs/common": "^11.0.12",
     "@nestjs/core": "^11.0.12",
-    "@nestjs/platform-express": "^10.0.0",
-    "@nestjs/swagger": "^11.2.0",
+    "@nestjs/platform-express": "^11.0.12",
+    "@nestjs/swagger": "^11.0.12",
     "cookie-parser": "^1.4.6",
-    "csurf": "^1.11.0",
+    "csurf": "^1.2.2",
     "rxjs": "^7.8.2"
   }
 }
