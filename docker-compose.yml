@@ -1,8 +1,0 @@
-services:
-  node:
-    image: node:20
-    user: node
-    working_dir: /usr/src/app
-    network_mode: host
-    volumes:
-      - $PWD:/usr/src/app
